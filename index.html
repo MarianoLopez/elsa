@@ -6,8 +6,8 @@
 		<link rel="stylesheet" href="./libs/materialize/css/materialize.min.css">
 		<script src="./libs/materialize/js/materialize.min.js"></script>
 		  <nav>
-		    <div class="nav-wrapper orange lighten-1">
-		      <a href="#" class="brand-logo"><img src="./static/perfil.jpg" style="height:60" class="circle responsive-img"></a>
+		    <div class="nav-wrapper orange lighten-3">
+		      <a href="#" class="brand-logo" style="margin:2px"><img src="./static/perfil.jpg" style="height:60" class="circle responsive-img"></a>
 		      <ul id="nav-mobile" class="right hide-on-med-and-down">
 		      </ul>
 		    </div>
@@ -15,51 +15,77 @@
 	</header>
 	<main>
 		<body>
-			<div id="app" class="container">
-			  <div class="row">
-		          <div class="card" v-for="producto in data">
-		          	<div class="col s4 m4">
-			            <div class="card-image">
-			              <img v-if="producto.imagenes[0]==''" src="./static/perfil.jpg">
-			              <img v-else :src="producto.imagenes[0]">
-			              <span class="card-title">{{producto.nombre}}</span>
-			            </div>
-			            <div class="card-content">
-			              <p>{{producto.descripcion}}</p>
-			            </div>
-			            <div class="card-action">
-			              <a v-if="producto.precios.precioKg>0" href="#">1kg: ${{producto.precios.precioKg}}</a>
-			              <a v-if="producto.precios.precioDocena>0" href="#">Docena: ${{producto.precios.precioDocena}}</a>
-			              <a v-if="producto.precios.precioUnidad>0" href="#">Unidad: ${{producto.precios.precioUnidad}}</a>
-			            </div>
-			        </div>
-		          </div>
-		        </div>
+		<div id="app" class="container">
+		<img src="./static/portada.jpg" class="responsive-img" style="margin-bottom:5px">
+		  <div class="row">
+		  	<div class="divider"></div>
+			<div class="section">
+			   <h5>{{mensajes.titulo}}</h5>
+			   <p>{{mensajes.tituloMensaje}}</p>
 			</div>
+			<div class="divider"></div>
+			<div class="section">
+			 	<h5>{{mensajes.menu}}</h5>
+			</div>
+			 <div class="preloader-wrapper big active" id="loader">
+			    <div class="spinner-layer spinner-blue-only">
+			      <div class="circle-clipper left">
+			        <div class="circle"></div>
+			      </div><div class="gap-patch">
+			        <div class="circle"></div>
+			      </div><div class="circle-clipper right">
+			        <div class="circle"></div>
+			      </div>
+			    </div>
+			 </div>
+
+			
+	          <div v-for="producto in data">
+	          	<div class="col s12 m6 l4">
+	          		<div class="card">
+		            <div class="card-image">
+					  <img  v-if="producto.imagenes[0]==''" src="./static/perfil.jpg" />
+					  <img v-else :src="producto.imagenes[0]" />
+		              <span class="card-title">{{producto.nombre}}</span>
+		            </div>
+		            <div class="card-content">
+		              <div class="row valign-wrapper"><span class="new badge" :data-badge-caption="producto.sabor"></span></div>
+		              <p>{{producto.descripcion}}</p>
+		            </div>
+		            <div class="card-action">
+		              <a v-if="producto.precios.precioKg>0" href="#">1kg: ${{producto.precios.precioKg}}</a>
+		              <a v-if="producto.precios.precioDocena>0" href="#">Docena: ${{producto.precios.precioDocena}}</a>
+		              <a v-if="producto.precios.precioUnidad>0" href="#">Unidad: ${{producto.precios.precioUnidad}}</a>
+		            </div>
+		        </div>
+	          </div>
+	          </div>
+	        </div>
+		</div>
 		</body>
 	</main>
-	<footer class="page-footer orange lighten-1">
+	<footer class="page-footer orange lighten-3">
       <div class="container">
         <div class="row">
           <div class="col l6 s12">
-            <h5 class="white-text">Footer Content</h5>
-            <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-          </div>
-          <div class="col l4 offset-l2 s12">
-            <h5 class="white-text">Links</h5>
+            <h5 class="white-text">Contacto</h5>
             <ul>
-              <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-              <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-              <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-              <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+              <li>
+              	<p style="padding:5px;" class="grey-text text-lighten-4">
+              		<a style="padding:5px;" target="_blank" href="https://www.facebook.com/Los-sabores-de-Elsa-1621078117914343/?ref=br_rs"><img src="./static/facebook.png" width="35" height="35" /></a>
+              		<img src="./static/whatsapp.png" width="35" height="35" />(3624619371)
+              	</p>
+              	<!--<a style="padding:5px;" target="_blank" href=""><img src="./static/instagram.png" width="35" height="35" /></a>-->
+              </li>
             </ul>
           </div>
+          <div class="col l4 offset-l2 s12">
         </div>
       </div>
       <div class="footer-copyright">
         <div class="container">
-        © 2014 Copyright Text
-        <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        © 2017 Los Sabores de Elsa
+        <a class="grey-text text-lighten-4 right" href="#!"></a>
         </div>
       </div>
     </footer>
@@ -67,16 +93,23 @@
 		var app = new Vue({
 		  el: '#app',
 		  data: {
-		    data:null
+		    data:null,
+		    mensajes:{titulo:null,tituloMensaje:null,menu:null}
 		  },
 		  methods:{
 		  	getAll: function(){
 		  		this.$http.get('https://script.google.com/macros/s/AKfycbwmF1edcLTYAcwMYLT2Um4pbmNIzsiYpt1Q-5xv9jdpQCJR204/exec')
-			      .then(response => {this.data = response.data;})
-			      .catch(error=>{alert('error al conectar')});
+			      .then(response => {this.data = response.data;$('#loader').hide();})
+			      .catch(error=>{$('#loader').hide();alert('error al conectar');});
+		  	},
+		  	getData: function(){
+		  		this.$http.get('https://script.google.com/macros/s/AKfycbwmF1edcLTYAcwMYLT2Um4pbmNIzsiYpt1Q-5xv9jdpQCJR204/exec?q=mensajes')
+			      .then(response => {this.mensajes = response.data[0];});
 		  	}
 		  },
 		  created(){
+		  	$('.carousel.carousel-slider').carousel({fullWidth: true});
+		  	this.getData();
 		  	this.getAll();
 		  }
 		});
@@ -84,7 +117,7 @@
 	<style type="text/css">
 		 body {display: flex;min-height: 100;flex-direction: column;}
 		 main {flex: 1 0 auto;}
-		 .card{margin: 2px;}
+		 
 		 #app{margin-top: 10px;}
 	</style>
 </html>
